@@ -8,37 +8,9 @@ import * as products from '../data/items';
 import Heading from './heading';
 import styles from './styles.css';
 import FontAwesome from 'react-fontawesome';
+import Item from './item';
 
-const Price = (price) => `$ ${(Math.round(price * 100) / 100).toFixed(2)}`;
-
-const Item = connect(
-  () => ({}),
-  {setQuantity, deleteItem},
-)(({id, quantity, setQuantity, deleteItem}) => {
-  const {title, price} = products[id];
-  const inc = () => setQuantity({id, quantity: quantity + 1});
-  const dec = () => setQuantity({id, quantity: quantity - 1});
-  const del = () => deleteItem({id});
-  return (
-    <tr className={styles.cartItem}>
-      <td>
-        {title}
-        <FontAwesome onClick={del} className={styles.trash} name='trash' />
-      </td>
-      <td>
-        {Price(price)}
-      </td>
-      <td>
-        {quantity}
-        <FontAwesome onClick={inc} name='plus' />
-        <FontAwesome onClick={dec} name='minus' />
-      </td>
-      <td>
-        {Price(price * quantity)}
-      </td>
-    </tr>
-  );
-});
+const roundPrice = (price) => `$ ${(Math.round(price * 100) / 100).toFixed(2)}`;
 
 const Cart = ({total, items, clear}) => (
   <div className={styles.cart}>
@@ -59,7 +31,7 @@ const Cart = ({total, items, clear}) => (
           {map((item) => <Item {...item} key={item.id}  />, items)}
           <tr>
             <td colSpan={3} />
-            <td colSpan={3} className={styles.totalPrice}>{Price(total)}</td>
+            <td colSpan={3} className={styles.totalPrice}>{roundPrice(total)}</td>
           </tr>
         </tbody>
       </table>
