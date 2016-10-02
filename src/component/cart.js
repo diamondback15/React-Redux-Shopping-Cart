@@ -7,6 +7,8 @@ import {clear, setQuantity, deleteItem} from '../action/cart';
 import * as products from '../data/items';
 import Heading from './heading';
 
+const Price = (price) => `$ ${(Math.round(price * 100) / 100).toFixed(2)}`;
+
 const Item = connect(
   () => ({}),
   {setQuantity, deleteItem}
@@ -22,14 +24,14 @@ const Item = connect(
         <a onClick={del}>del</a>
       </td>
       <td>
-        {price}
+        {Price(price)}
       </td>
       <td>
         {quantity}
         <a onClick={inc}>+</a> <a onClick={dec}>-</a>
       </td>
       <td>
-        {price * quantity}
+        {Price(price * quantity)}
       </td>
     </tr>
   );
@@ -50,7 +52,7 @@ const Cart = ({total, items}) => (
       </thead>
       <tbody>
         {map((item) => <Item {...item}/>, items)}
-        <tr><td colSpan={3}/><td>TOTAL: {total}</td></tr>
+        <tr><td colSpan={3}/><td>TOTAL: {Price(total)}</td></tr>
       </tbody>
     </table>
   </div>
