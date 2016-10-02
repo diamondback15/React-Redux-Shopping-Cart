@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {clear, setQuantity, deleteItem} from '../action/cart';
 import * as products from '../data/items';
 import Heading from './heading';
+import FontAwesome from 'react-fontawesome';
 
 const Price = (price) => `$ ${(Math.round(price * 100) / 100).toFixed(2)}`;
 
@@ -21,14 +22,15 @@ const Item = connect(
     <tr>
       <td>
         {title}
-        <a onClick={del}>del</a>
+        <FontAwesome onClick={del} name='trash' />
       </td>
       <td>
         {Price(price)}
       </td>
       <td>
         {quantity}
-        <a onClick={inc}>+</a> <a onClick={dec}>-</a>
+        <FontAwesome onClick={inc} name='plus' />
+        <FontAwesome onClick={dec} name='minus' />
       </td>
       <td>
         {Price(price * quantity)}
@@ -39,7 +41,7 @@ const Item = connect(
 
 const Cart = ({total, items}) => (
   <div>
-    <Heading>Cart</Heading>
+    <Heading><FontAwesome name='shopping-cart' /> Cart</Heading>
     <a onClick={clear}>Clear all items</a>
     <table>
       <thead>
