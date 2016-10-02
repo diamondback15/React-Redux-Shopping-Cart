@@ -1,11 +1,8 @@
 import {createElement} from 'react';
-import map from 'lodash/fp/map';
-import reduce from 'lodash/fp/reduce';
 import {connect} from 'react-redux';
 
-import {clear, setQuantity, deleteItem} from '../action/cart';
+import {setQuantity, deleteItem} from '../action/cart';
 import * as products from '../data/items';
-import Heading from './heading';
 import styles from './styles.css';
 import FontAwesome from 'react-fontawesome';
 
