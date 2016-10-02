@@ -41,9 +41,9 @@ const Item = connect(
 });
 
 const Cart = ({total, items, clear}) => (
-
   <div className={styles.cart}>
     <Heading><FontAwesome name='shopping-cart' /> Cart</Heading>
+    {items.length > 0 ?
     <div>
       <button onClick={clear}>Clear all items</button>
       <table>
@@ -64,6 +64,7 @@ const Cart = ({total, items, clear}) => (
         </tbody>
       </table>
     </div>
+  : <p>Your cart is empty</p>}
   </div>
 );
 
