@@ -24,7 +24,8 @@ export default handleActions({
   [SET_QUANTITY]: (state, {payload: {id: target, quantity}}) => ({
     ...state,
     items: map(({id, ...rest}) => (
-      target === id ? {id, ...rest, quantity} : {id, ...rest}
+      ((target === id) && (quantity > 0)
+      ? {id, ...rest, quantity} : {id, ...rest})
     ), state.items),
   }),
 }, {
