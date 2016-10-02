@@ -6,23 +6,24 @@ import {connect} from 'react-redux';
 import {clear, setQuantity, deleteItem} from '../action/cart';
 import * as products from '../data/items';
 import Heading from './heading';
+import styles from './styles.css';
 import FontAwesome from 'react-fontawesome';
 
 const Price = (price) => `$ ${(Math.round(price * 100) / 100).toFixed(2)}`;
 
 const Item = connect(
   () => ({}),
-  {setQuantity, deleteItem}
+  {setQuantity, deleteItem},
 )(({id, quantity, setQuantity, deleteItem}) => {
   const {title, price} = products[id];
   const inc = () => setQuantity({id, quantity: quantity + 1});
   const dec = () => setQuantity({id, quantity: quantity - 1});
   const del = () => deleteItem({id});
   return (
-    <tr>
+    <tr className={styles.cartItem}>
       <td>
         {title}
-        <FontAwesome onClick={del} name='trash' />
+        <FontAwesome onClick={del} className={styles.trash} name='trash' />
       </td>
       <td>
         {Price(price)}
@@ -39,24 +40,30 @@ const Item = connect(
   );
 });
 
-const Cart = ({total, items}) => (
-  <div>
+const Cart = ({total, items, clear}) => (
+
+  <div className={styles.cart}>
     <Heading><FontAwesome name='shopping-cart' /> Cart</Heading>
-    <a onClick={clear}>Clear all items</a>
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {map((item) => <Item {...item}/>, items)}
-        <tr><td colSpan={3}/><td>TOTAL: {Price(total)}</td></tr>
-      </tbody>
-    </table>
+    <div>
+      <button onClick={clear}>Clear all items</button>
+      <table>
+        <thead className={styles.cartHead}>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {map((item) => <Item {...item} key={item.id}  />, items)}
+          <tr>
+            <td colSpan={3} />
+            <td colSpan={3} className={styles.totalPrice}>{Price(total)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 );
 
@@ -69,4 +76,4 @@ export default connect((state) => {
       state.cart.items
     ),
   };
-})(Cart);
+}, {clear})(Cart);
